@@ -171,7 +171,7 @@ public class CalculationServiceImpl implements CalculationService {
         if (!operations.isEmpty()) {
             double operand2 = operands.poll();
             double operand1 = operands.poll();
-            tempResult = commandFactory.createCommand(operations.poll().toString(), operand1, operand2).execute();
+            tempResult = commandFactory.createCommand(operations.poll(), operand1, operand2).execute();
             operands.push(tempResult);
         }
     }
@@ -328,7 +328,7 @@ public class CalculationServiceImpl implements CalculationService {
         }
 
         // create proper command, execute it and return result of execution
-        return commandFactory.createCommand(function.getValue(), arguments.toArray(new Double[arguments.size()])).execute();
+        return commandFactory.createCommand(function, arguments.toArray(new Double[arguments.size()])).execute();
     }
 
     /**
