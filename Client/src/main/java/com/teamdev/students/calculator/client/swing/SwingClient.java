@@ -78,7 +78,7 @@ public class SwingClient extends JFrame {
      */
     private void performCalculation() {
         // create calculation service
-        CalculationService calculationService = CalculationServicesFactory.createSimpleCalculationService();
+        CalculationService calculationService = CalculationServicesFactory.createExtendedCalculationService();
 
         // get expression from text area
         String expression = textArea.getText().replaceAll("\n", "").replaceAll(" ", "");
@@ -91,7 +91,7 @@ public class SwingClient extends JFrame {
         } catch (CalculationException e1) {
             // show error message
             char invalidToken = expression.charAt(e1.getInvalidTokenPosition());
-            resultLabel.setText("Result: " + invalidToken + "'" + " at " + (e1.getInvalidTokenPosition() + 1) + ", " + e1.getMessage());
+            resultLabel.setText("Result: '" + invalidToken + "'" + " at " + (e1.getInvalidTokenPosition() + 1) + ", " + e1.getMessage());
 
             // position cursor on the invalid token
             textArea.setText(expression);

@@ -25,17 +25,22 @@ public class CalculationServiceImpl implements CalculationService {
     // expression to parse
     private String expression;
 
-    /**
-     * Calculate string expression according to operations precedence.
-     *
-     * @param expression string mathematical expression
-     * @return double value, that represents result of calculation
-     * @throws com.teamdev.students.calculator.services.CalculationException
-     *
-     */
+    // factory that can create tokens from string expression
+    TokenFactory tokenFactory;
+
+    CommandFactory commandFactory;
+
+    public CalculationServiceImpl(TokenFactory tokenFactory) {
+        setup();
+        this.tokenFactory = tokenFactory;
+        this.commandFactory = tokenFactory.getCommandFactory();
+    }
+
+
     @Override
     public double calculate(String expression) throws CalculationException {
         this.expression = expression;
+
         if (expression == null)
             throw new NullPointerException("Nothing to calculate.");
 
@@ -56,8 +61,14 @@ public class CalculationServiceImpl implements CalculationService {
         return result;
     }
 
-
     public CalculationServiceImpl() {
+        setup();
+        tokenFactory = new SimpleTokenFactory();
+        commandFactory = tokenFactory.getCommandFactory();
+    }
+
+
+    private void setup() {
         parsingPosition = 0;
         bracketCount = 0;
         stateHandler = new StateHandler();
@@ -137,7 +148,7 @@ public class CalculationServiceImpl implements CalculationService {
      */
     private void handleOperation(String operationValue, Deque<Double> operands, Deque<Operation> operations) throws CalculationException {
         try {
-            Operation operation = (Operation) TokenFactory.getToken(operationValue);
+            Operation operation = (Operation) tokenFactory.getToken(operationValue);
             stateHandler.handleOperation();
             while (!operations.isEmpty() &&
                     operation.getPrecedence() <= operations.peek().getPrecedence()) {
@@ -160,7 +171,7 @@ public class CalculationServiceImpl implements CalculationService {
         if (!operations.isEmpty()) {
             double operand2 = operands.poll();
             double operand1 = operands.poll();
-            tempResult = CommandFactory.createCommand(operations.poll().toString(), operand1, operand2).execute();
+            tempResult = commandFactory.createCommand(operations.poll().toString(), operand1, operand2).execute();
             operands.push(tempResult);
         }
     }
@@ -210,7 +221,7 @@ public class CalculationServiceImpl implements CalculationService {
      */
     private void handleFunction(String functionName, Deque<Double> operands) throws CalculationException {
         try {
-            Function function = (Function) TokenFactory.getToken(functionName);
+            Function function = (Function) tokenFactory.getToken(functionName);
             stateHandler.handleFunction();
             operands.push(solveFunction(function));
         } catch (IllegalArgumentException e) {
@@ -317,7 +328,7 @@ public class CalculationServiceImpl implements CalculationService {
         }
 
         // create proper command, execute it and return result of execution
-        return CommandFactory.createCommand(function.getValue(), arguments.toArray(new Double[arguments.size()])).execute();
+        return commandFactory.createCommand(function.getValue(), arguments.toArray(new Double[arguments.size()])).execute();
     }
 
     /**

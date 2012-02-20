@@ -13,4 +13,8 @@ public class CalculationServicesFactory {
     public static CalculationService createSimpleCalculationService() {
         return new CalculationServiceImpl();
     }
+
+    public static CalculationService createExtendedCalculationService() {
+        return new CalculationServiceImpl(new ExtendedTokenFactory());
+    }
 }

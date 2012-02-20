@@ -10,9 +10,8 @@ public interface CalculationService {
      *
      * @param expression expression to solve
      * @return result of calculation
-     * @throws com.teamdev.students.calculator.services.CalculationException
-     *          If expression is syntactically incorrect
-     *          or some other calculation error occurs
+     * @throws CalculationException If expression is syntactically incorrect
+     *                              or some other calculation error occurs
      */
     double calculate(String expression) throws CalculationException;
 }

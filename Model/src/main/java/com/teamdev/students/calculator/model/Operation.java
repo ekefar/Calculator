@@ -6,6 +6,9 @@ package com.teamdev.students.calculator.model;
 public class Operation extends Token {
     private String value;
 
+    // operation`s precedence
+    private int precedence;
+
     /**
      * get operation`s string representation
      *
@@ -19,22 +22,27 @@ public class Operation extends Token {
         this.value = value;
     }
 
+    public Operation(String value, int precedence) {
+        this.value = value;
+        this.precedence = precedence;
+    }
+
+    /**
+     * Set value of operation`s precedence
+     *
+     * @param precedence precedence value
+     */
+    public void setPrecedence(int precedence) {
+        this.precedence = precedence;
+    }
 
     /**
      * Get operation`s precedence.
-     * '+', '-' - precedence 1;
-     * '/', '/' - precedence 2;
-     * '^' - precedence 3;
      *
      * @return operation`s precedence
      */
-    public byte getPrecedence() {
-        if (value.equals("+") || value.equals("-"))
-            return 1;
-        if (value.equals("*") || value.equals("/"))
-            return 2;
-
-        else return 3;
+    public int getPrecedence() {
+        return precedence;
     }
 
     public String toString() {
