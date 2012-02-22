@@ -14,7 +14,4 @@ public class CalculationServicesFactory {
         return new CalculationServiceImpl();
     }
 
-    public static CalculationService createExtendedCalculationService() {
-        return new CalculationServiceImpl(new ExtendedTokenFactory());
-    }
 }

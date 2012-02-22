@@ -399,24 +399,9 @@ public class AppTest
         assertEquals(EXPECTED_RESULT, actualResult);
     }
 
-    /**
-     * test case for checking sum function
-     *
-     * @throws com.teamdev.students.calculator.services.CalculationException
-     *          if fail
-     */
-    public void testMod() throws CalculationException {
-        final double EXPECTED_RESULT = 5;
-        final String EXPRESSION = "15%10";
-        double actualResult = calculateExpression(EXPRESSION);
-
-        // assert equality of expected and actual results
-        assertEquals(EXPECTED_RESULT, actualResult);
-    }
-
 
     public double calculateExpression(String expression) throws CalculationException {
-        CalculationService calculationService = CalculationServicesFactory.createExtendedCalculationService();
+        CalculationService calculationService = CalculationServicesFactory.createSimpleCalculationService();
         return calculationService.calculate(expression);
     }
 }

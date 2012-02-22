@@ -1,8 +1,10 @@
 package com.teamdev.students.calculator.services;
 
-import com.teamdev.students.calculator.model.Function;
-import com.teamdev.students.calculator.model.Operation;
-import com.teamdev.students.calculator.services.commands.CommandFactory;
+import com.teamdev.students.calculator.model.*;
+import com.teamdev.students.calculator.services.commands.EvaluateFunctionCommand;
+import com.teamdev.students.calculator.services.commands.EvaluateOperationCommand;
+import com.teamdev.students.calculator.services.functions.BaseFunctionFactory;
+import com.teamdev.students.calculator.services.operations.BaseOperationFactory;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.List;
 /**
  * Implementation of CalculationService that can provide calculation of math expression
  */
-public class CalculationServiceImpl implements CalculationService {
+class CalculationServiceImpl implements CalculationService {
     // currently parsing token position
     private int parsingPosition;
 
@@ -25,15 +27,16 @@ public class CalculationServiceImpl implements CalculationService {
     // expression to parse
     private String expression;
 
-    // factory that can create tokens from string expression
-    TokenFactory tokenFactory;
+    // factory for functions creation
+    FunctionFactory functionFactory;
 
-    CommandFactory commandFactory;
+    // factory for operations creation
+    OperationFactory operationFactory;
 
-    public CalculationServiceImpl(TokenFactory tokenFactory) {
+    public CalculationServiceImpl(CalculationContext calculationContext) {
         setup();
-        this.tokenFactory = tokenFactory;
-        this.commandFactory = tokenFactory.getCommandFactory();
+        this.functionFactory = calculationContext.getFunctionFactory();
+        this.operationFactory = calculationContext.getOperationFactory();
     }
 
 
@@ -63,11 +66,14 @@ public class CalculationServiceImpl implements CalculationService {
 
     public CalculationServiceImpl() {
         setup();
-        tokenFactory = new SimpleTokenFactory();
-        commandFactory = tokenFactory.getCommandFactory();
+
+        operationFactory = new BaseOperationFactory();
+        functionFactory = new BaseFunctionFactory();
     }
 
-
+    /**
+     * make some initial settings
+     */
     private void setup() {
         parsingPosition = 0;
         bracketCount = 0;
@@ -148,7 +154,7 @@ public class CalculationServiceImpl implements CalculationService {
      */
     private void handleOperation(String operationValue, Deque<Double> operands, Deque<Operation> operations) throws CalculationException {
         try {
-            Operation operation = (Operation) tokenFactory.getToken(operationValue);
+            Operation operation = operationFactory.getOperation(operationValue);
             stateHandler.handleOperation();
             while (!operations.isEmpty() &&
                     operation.getPrecedence() <= operations.peek().getPrecedence()) {
@@ -171,7 +177,7 @@ public class CalculationServiceImpl implements CalculationService {
         if (!operations.isEmpty()) {
             double operand2 = operands.poll();
             double operand1 = operands.poll();
-            tempResult = commandFactory.createCommand(operations.poll(), operand1, operand2).execute();
+            tempResult = new EvaluateOperationCommand(operations.poll(), operand1, operand2).execute();
             operands.push(tempResult);
         }
     }
@@ -221,7 +227,7 @@ public class CalculationServiceImpl implements CalculationService {
      */
     private void handleFunction(String functionName, Deque<Double> operands) throws CalculationException {
         try {
-            Function function = (Function) tokenFactory.getToken(functionName);
+            Function function = functionFactory.getFunction(functionName);
             stateHandler.handleFunction();
             operands.push(solveFunction(function));
         } catch (IllegalArgumentException e) {
@@ -327,8 +333,17 @@ public class CalculationServiceImpl implements CalculationService {
             arguments.add(resolveExpression());
         }
 
+
         // create proper command, execute it and return result of execution
-        return commandFactory.createCommand(function, arguments.toArray(new Double[arguments.size()])).execute();
+        return new EvaluateFunctionCommand(function, convertToArray(arguments)).execute();
+    }
+
+    private double[] convertToArray(List<Double> list) {
+        double[] simpleArray = new double[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            simpleArray[i] = list.get(i);
+        }
+        return simpleArray;
     }
 
     /**

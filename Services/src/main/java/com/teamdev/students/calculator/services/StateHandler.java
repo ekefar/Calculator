@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Represents object, that can handle parsing state changing
  */
-public class StateHandler {
+class StateHandler {
 
     // possible states
     enum States {

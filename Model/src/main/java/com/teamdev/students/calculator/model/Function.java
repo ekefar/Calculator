@@ -1,26 +1,17 @@
 package com.teamdev.students.calculator.model;
 
 /**
- * Represents math function such as sin, cos, etc.
+ * Represent functions such as max, min etc.
  */
-public class Function extends Token {
-    private String value;
+public interface Function {
 
     /**
-     * Get function`s string representation
+     * Calculate function`s value
      *
-     * @return function string representation
+     * @param args function`s arguments
+     * @return result of function calculation
      */
-    public String getValue() {
-        return value;
-    }
+    public double evaluate(double... args);
 
 
-    public Function(String value) {
-        this.value = value;
-    }
-
-    public String toString() {
-        return value;
-    }
 }
