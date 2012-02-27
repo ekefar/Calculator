@@ -17,6 +17,7 @@
         <module>Model</module>
         <module>Services</module>
         <module>Client</module>
+        <module>Parser</module>
     </modules>
 
 

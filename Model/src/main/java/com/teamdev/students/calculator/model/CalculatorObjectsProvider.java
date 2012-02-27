@@ -3,7 +3,7 @@ package com.teamdev.students.calculator.model;
 /**
  * Represents calculation context...
  */
-public interface CalculationContext {
+public interface CalculatorObjectsProvider {
     /**
      * Get function factory for this calculation context
      *

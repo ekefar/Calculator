@@ -140,13 +140,13 @@ public class AppTest
      */
     public void testIllegalSymbols() {
         // expected illegal symbol position
-        final int EXPECTED_RESULT = 3;
+        final int EXPECTED_RESULT = 2;
         final String EXPRESSION = "2++8";
         int actualResult = -1;
         try {
             double res = calculateExpression(EXPRESSION);
         } catch (CalculationException e) {
-            actualResult = e.getInvalidTokenPosition() + 1;
+            actualResult = e.getInvalidTokenPosition();
         }
 
         // assert equality of expected and actual results
@@ -158,13 +158,13 @@ public class AppTest
      */
     public void testIllegalSymbols2() {
         // expected illegal symbol position
-        final int EXPECTED_RESULT = 3;
+        final int EXPECTED_RESULT = 2;
         final String EXPRESSION = "-2max+8";
         int actualResult = -1;
         try {
             double res = calculateExpression(EXPRESSION);
         } catch (CalculationException e) {
-            actualResult = e.getInvalidTokenPosition() + 1;
+            actualResult = e.getInvalidTokenPosition();
         }
 
         // assert equality of expected and actual results
@@ -176,18 +176,15 @@ public class AppTest
      * test case for checking illegal symbols
      */
     public void testIllegalSymbols3() {
-        // expected illegal symbol position
-        final int EXPECTED_RESULT = 7;
         final String EXPRESSION = "2+65-6+";
         int actualResult = -1;
         try {
             double res = calculateExpression(EXPRESSION);
         } catch (CalculationException e) {
-            actualResult = e.getInvalidTokenPosition() + 1;
+            assertTrue(true);
         }
 
-        // assert equality of expected and actual results
-        assertEquals(EXPECTED_RESULT, actualResult);
+
     }
 
     /**
@@ -195,13 +192,13 @@ public class AppTest
      */
     public void testIllegalSymbols4() {
         // expected illegal symbol position
-        final int EXPECTED_RESULT = 8;
+        final int EXPECTED_RESULT = 7;
         final String EXPRESSION = "2+65-6+)78(dfsdf";
         int actualResult = -1;
         try {
             double res = calculateExpression(EXPRESSION);
         } catch (CalculationException e) {
-            actualResult = e.getInvalidTokenPosition() + 1;
+            actualResult = e.getInvalidTokenPosition();
         }
 
         // assert equality of expected and actual results
@@ -213,13 +210,13 @@ public class AppTest
      */
     public void testIllegalSymbols5() {
         // expected illegal symbol position
-        final int EXPECTED_RESULT = 3;
+        final int EXPECTED_RESULT = 2;
         final String EXPRESSION = "36)-5+2,8+(54)";
         int actualResult = -1;
         try {
             double res = calculateExpression(EXPRESSION);
         } catch (CalculationException e) {
-            actualResult = e.getInvalidTokenPosition() + 1;
+            actualResult = e.getInvalidTokenPosition();
         }
 
         // assert equality of expected and actual results
@@ -360,8 +357,8 @@ public class AppTest
      *          if fail
      */
     public void testMinFunction2() throws CalculationException {
-        final double EXPECTED_RESULT = 1;
-        final String EXPRESSION = "min(100,50,20,10,5,1)";
+        final double EXPECTED_RESULT = 2;
+        final String EXPRESSION = "min(100,50,20,10,5,(1+1))";
         double actualResult = calculateExpression(EXPRESSION);
 
         // assert equality of expected and actual results
@@ -393,6 +390,36 @@ public class AppTest
     public void testSumFunction2() throws CalculationException {
         final double EXPECTED_RESULT = 34;
         final String EXPRESSION = "sum(25+5,min(30-8,2),5*2-(5+8),5)";
+        double actualResult = calculateExpression(EXPRESSION);
+
+        // assert equality of expected and actual results
+        assertEquals(EXPECTED_RESULT, actualResult);
+    }
+
+    /**
+     * test case for checking sum function
+     *
+     * @throws com.teamdev.students.calculator.services.CalculationException
+     *          if fail
+     */
+    public void testInnerFunctions() throws CalculationException {
+        final double EXPECTED_RESULT = 5;
+        final String EXPRESSION = "sum(min(2),3)";
+        double actualResult = calculateExpression(EXPRESSION);
+
+        // assert equality of expected and actual results
+        assertEquals(EXPECTED_RESULT, actualResult);
+    }
+
+    /**
+     * test case for checking sum function
+     *
+     * @throws com.teamdev.students.calculator.services.CalculationException
+     *          if fail
+     */
+    public void testVarious() throws CalculationException {
+        final double EXPECTED_RESULT = 9;
+        final String EXPRESSION = "((2+2))+5";
         double actualResult = calculateExpression(EXPRESSION);
 
         // assert equality of expected and actual results
