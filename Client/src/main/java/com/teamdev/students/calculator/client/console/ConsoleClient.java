@@ -1,8 +1,8 @@
 package com.teamdev.students.calculator.client.console;
 
-import com.teamdev.students.calculator.services.CalculationException;
-import com.teamdev.students.calculator.services.CalculationService;
 import com.teamdev.students.calculator.services.CalculationServicesFactory;
+import com.teamdev.students.calculator.services.api.CalculationException;
+import com.teamdev.students.calculator.services.api.CalculationService;
 
 import java.util.Scanner;
 

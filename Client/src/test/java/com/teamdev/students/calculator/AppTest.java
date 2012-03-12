@@ -1,9 +1,9 @@
 package com.teamdev.students.calculator;
 
 
-import com.teamdev.students.calculator.services.CalculationException;
-import com.teamdev.students.calculator.services.CalculationService;
 import com.teamdev.students.calculator.services.CalculationServicesFactory;
+import com.teamdev.students.calculator.services.api.CalculationException;
+import com.teamdev.students.calculator.services.api.CalculationService;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -40,7 +40,7 @@ public class AppTest
     /**
      * test case for checking '-' operation
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testMinus() throws CalculationException {
@@ -56,7 +56,7 @@ public class AppTest
     /**
      * test case for checking '+' operation
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testPlus() throws CalculationException {
@@ -73,7 +73,7 @@ public class AppTest
     /**
      * test case for checking brackets
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testBrackets() throws CalculationException {
@@ -89,7 +89,7 @@ public class AppTest
     /**
      * test case for checking brackets
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testBrackets2() throws CalculationException {
@@ -105,7 +105,7 @@ public class AppTest
     /**
      * test case for checking brackets
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testBrackets3() throws CalculationException {
@@ -121,7 +121,7 @@ public class AppTest
     /**
      * test case for checking brackets
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testBrackets4() throws CalculationException {
@@ -180,7 +180,7 @@ public class AppTest
         int actualResult = -1;
         try {
             double res = calculateExpression(EXPRESSION);
-        } catch (CalculationException e) {
+        } catch (Exception e) {
             assertTrue(true);
         }
 
@@ -226,7 +226,7 @@ public class AppTest
     /**
      * test case for checking '*' operation
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testMultiplication() throws CalculationException {
@@ -242,7 +242,7 @@ public class AppTest
     /**
      * test case for checking '/' operation
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testDivision() throws CalculationException {
@@ -257,7 +257,7 @@ public class AppTest
     /**
      * test case for checking '/' operation
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testDivisionByZero() throws CalculationException {
@@ -278,7 +278,7 @@ public class AppTest
     /**
      * test case for checking '^' operation
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testPower() throws CalculationException {
@@ -293,7 +293,7 @@ public class AppTest
     /**
      * test case for checking sqrt function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testSqrtFunction() throws CalculationException {
@@ -308,7 +308,7 @@ public class AppTest
     /**
      * test case for checking max function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testMaxFunction() throws CalculationException {
@@ -323,7 +323,7 @@ public class AppTest
     /**
      * test case for checking max function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testMaxFunction2() throws CalculationException {
@@ -338,7 +338,7 @@ public class AppTest
     /**
      * test case for checking min function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testMinFunction() throws CalculationException {
@@ -353,7 +353,7 @@ public class AppTest
     /**
      * test case for checking min function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testMinFunction2() throws CalculationException {
@@ -369,7 +369,7 @@ public class AppTest
     /**
      * test case for sum function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testSumFunction() throws CalculationException {
@@ -384,7 +384,7 @@ public class AppTest
     /**
      * test case for checking sum function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testSumFunction2() throws CalculationException {
@@ -399,7 +399,7 @@ public class AppTest
     /**
      * test case for checking sum function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testInnerFunctions() throws CalculationException {
@@ -414,7 +414,7 @@ public class AppTest
     /**
      * test case for checking sum function
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail
      */
     public void testVarious() throws CalculationException {

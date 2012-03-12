@@ -2,7 +2,7 @@ package com.teamdev.students.calculator.services;
 
 import com.teamdev.students.calculator.model.Function;
 import com.teamdev.students.calculator.model.Operation;
-import com.teamdev.students.calculator.services.commands.EvaluateFunctionCommand;
+import com.teamdev.students.calculator.services.api.CalculationException;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import java.util.*;
  * Represents object that can change calculation context
  * depending on it`s current state.
  */
-public enum StateHandler implements StateAcceptor<CalculationContext> {
+enum StateHandler implements StateAcceptor<CalculationContext> {
 
     START {
         @Override
@@ -112,7 +112,7 @@ public enum StateHandler implements StateAcceptor<CalculationContext> {
          * @param function function to execute
          * @param context calculation context
          * @return value of function
-         * @throws com.teamdev.students.calculator.services.CalculationException
+         * @throws com.teamdev.students.calculator.services.api.CalculationException
          *          if there was an error during function execution
          */
         private double solveFunction(Function function, CalculationContext context) throws CalculationException {
@@ -132,7 +132,7 @@ public enum StateHandler implements StateAcceptor<CalculationContext> {
             context.setCalculationIndex(context.getCalculationIndex() + 1);
 
             // create proper command, execute it and return result of execution
-            return new EvaluateFunctionCommand(function, convertToArray(arguments)).execute();
+            return function.evaluate(convertToArray(arguments));
 
         }
 

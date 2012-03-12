@@ -2,6 +2,7 @@ package com.teamdev.students.calculator.services;
 
 import com.teamdev.students.calculator.parser.Parser;
 import com.teamdev.students.calculator.parser.SimpleParser;
+import com.teamdev.students.calculator.services.api.CalculationException;
 
 
 /**
@@ -68,7 +69,7 @@ public class Calculator {
     /**
      * Check if expression have been parsed entirely and there are no syntactical mistakes.
      *
-     * @throws com.teamdev.students.calculator.services.CalculationException
+     * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if parsing have been interrupted
      *          before expression end
      */

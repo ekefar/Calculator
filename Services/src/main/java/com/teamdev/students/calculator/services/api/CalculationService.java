@@ -1,4 +1,4 @@
-package com.teamdev.students.calculator.services;
+package com.teamdev.students.calculator.services.api;
 
 /**
  * Represents service, that can perform calculation of mathematical expression

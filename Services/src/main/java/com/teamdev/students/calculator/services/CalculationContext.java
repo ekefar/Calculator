@@ -4,7 +4,7 @@ import com.teamdev.students.calculator.model.CalculatorObjectsProvider;
 import com.teamdev.students.calculator.model.FunctionFactory;
 import com.teamdev.students.calculator.model.Operation;
 import com.teamdev.students.calculator.model.OperationFactory;
-import com.teamdev.students.calculator.services.commands.EvaluateOperationCommand;
+import com.teamdev.students.calculator.services.api.CalculationException;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -133,12 +133,10 @@ public class CalculationContext {
      */
     private void calculateTemporaryData() {
         double tempResult;
-        if (!operations.isEmpty()) {
-            double operand2 = operands.poll();
-            double operand1 = operands.poll();
-            tempResult = new EvaluateOperationCommand(operations.poll(), operand1, operand2).execute();
-            operands.push(tempResult);
-        }
+        double operand2 = operands.poll();
+        double operand1 = operands.poll();
+        tempResult = operations.poll().evaluate(operand1, operand2);
+        operands.push(tempResult);
     }
 
     /**
