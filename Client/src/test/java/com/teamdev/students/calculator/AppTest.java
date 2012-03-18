@@ -313,7 +313,7 @@ public class AppTest
      */
     public void testMaxFunction() throws CalculationException {
         final double EXPECTED_RESULT = 25;
-        final String EXPRESSION = "max(25,-5)";
+        final String EXPRESSION = "max(25,5)";
         double actualResult = calculateExpression(EXPRESSION);
 
         // assert equality of expected and actual results

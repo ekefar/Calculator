@@ -43,13 +43,8 @@ enum StateHandler implements StateAcceptor<CalculationContext> {
         public boolean accept(CalculationContext context) {
             if (!context.getCurrentToken().equals("(")) return false;
             try {
-                String expression = context.getExpression();
-                context.setBracketCount(context.getBracketCount() + 1);
-
                 // create another one context object but with current calculation position
-                CalculationContext innerContext = new CalculationContext(
-                        expression.substring(context.getCalculationIndex() + 1),
-                        context.getObjectsProvider());
+                CalculationContext innerContext = new CalculationContext(context);
 
                 // create another one calculator object with new context
                 Calculator calculator = new Calculator(innerContext);
@@ -59,7 +54,7 @@ enum StateHandler implements StateAcceptor<CalculationContext> {
 
                 // change calculation position according to results of recursive invoke
                 context.setCalculationIndex(context.getCalculationIndex() + innerContext.getCalculationIndex() + 1);
-                context.setBracketCount(context.getBracketCount() + innerContext.getBracketCount());
+
                 context.setState(NUMBER);
                 return true;
             } catch (CalculationException e) {
@@ -72,7 +67,6 @@ enum StateHandler implements StateAcceptor<CalculationContext> {
         public boolean accept(CalculationContext context) {
             if (!context.getCurrentToken().equals(")")) return false;
             context.setState(CLOSING_BRACKET);
-            context.setBracketCount(context.getBracketCount() - 1);
             return true;
         }
     },
@@ -80,7 +74,7 @@ enum StateHandler implements StateAcceptor<CalculationContext> {
         @Override
         public boolean accept(CalculationContext context) {
             try {
-                Operation operation = context.getOperationFactory().getOperation(context.getCurrentToken());
+                Operation operation = context.getOperationFactory().createOperation(context.getCurrentToken());
                 context.handleOperation(operation);
                 context.setState(OPERATION);
                 return true;
@@ -93,7 +87,7 @@ enum StateHandler implements StateAcceptor<CalculationContext> {
         @Override
         public boolean accept(CalculationContext context) {
             try {
-                Function function = context.getFunctionFactory().getFunction(context.getCurrentToken());
+                Function function = context.getFunctionFactory().createFunction(context.getCurrentToken());
                 context.setCalculationIndex(context.getCalculationIndex() + context.getCurrentToken().length());
                 context.setState(FUNCTION);
                 context.handleOperand(solveFunction(function, context));

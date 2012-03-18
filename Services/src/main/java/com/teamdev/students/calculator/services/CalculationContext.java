@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CalculationContext {
     // expression to solve
-    private final String expression;
+    private String expression;
 
     // operands stack
     private Deque<Double> operands;
@@ -37,8 +37,8 @@ public class CalculationContext {
     // current state
     private StateHandler currentState;
 
-    // bracket counter. greater 0 - extra opening bracket, less - extra closing
-    private int bracketCount;
+    // parent calculation context
+    private CalculationContext parentContext;
 
     //object that provides info about functions and operations
     // used to solve expression
@@ -50,20 +50,20 @@ public class CalculationContext {
     public CalculationContext(String expression, CalculatorObjectsProvider objectProvider) {
         this.expression = expression;
         this.objectsProvider = objectProvider;
-        setup();
-    }
-
-    /**
-     * Make some  initial settings
-     */
-    private void setup() {
         operands = new ArrayDeque<Double>();
         operations = new ArrayDeque<Operation>();
         operationFactory = objectsProvider.getOperationFactory();
         functionFactory = objectsProvider.getFunctionFactory();
         currentState = StateHandler.START;
-        bracketCount = 0;
     }
+
+
+    public CalculationContext(CalculationContext parent) {
+        this(parent.getExpression(), parent.getObjectsProvider());
+        parentContext = parent;
+        expression = parent.getExpression().substring(parent.getCalculationIndex() + 1);
+    }
+
 
     public CalculatorObjectsProvider getObjectsProvider() {
         return objectsProvider;
@@ -150,15 +150,6 @@ public class CalculationContext {
         return operands.poll();
     }
 
-
-    public int getBracketCount() {
-        return bracketCount;
-    }
-
-    public void setBracketCount(int value) {
-        bracketCount = value;
-    }
-
     /**
      * Check balance of opening and closing brackets.
      *
@@ -166,9 +157,9 @@ public class CalculationContext {
      */
     public void validateBrackets() throws CalculationException {
         // check for extra brackets
-        if (bracketCount > 0)
+        if (parentContext != null)
             throw new CalculationException("Can't find proper closing bracket", findWrongOpeningBracket(expression));
-        else if (bracketCount < 0 || calculationIndex < expression.length())
+        else if (calculationIndex < expression.length())
             throw new CalculationException(calculationIndex - 1);
     }
 

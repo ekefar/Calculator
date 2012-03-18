@@ -13,13 +13,11 @@ class CalculationServiceImpl implements CalculationService {
     CalculatorObjectsProvider objectsProvider;
 
     public CalculationServiceImpl(CalculatorObjectsProvider objectsProvider) {
-        setup();
         this.objectsProvider = objectsProvider;
     }
 
     public CalculationServiceImpl() {
         objectsProvider = new BaseCalculatorObjectProvider();
-        setup();
     }
 
     @Override
@@ -28,7 +26,6 @@ class CalculationServiceImpl implements CalculationService {
         if (expression == null)
             throw new NullPointerException("Nothing to calculate.");
 
-        expression = expression.replaceAll(" ", "");
         if (expression.equals(""))
             throw new IllegalArgumentException("Nothing to calculate.");
 
@@ -39,12 +36,6 @@ class CalculationServiceImpl implements CalculationService {
         context.validateBrackets();
         return result;
 
-    }
-
-    /**
-     * make some initial settings
-     */
-    private void setup() {
     }
 
 

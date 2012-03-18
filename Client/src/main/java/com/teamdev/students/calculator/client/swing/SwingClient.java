@@ -81,7 +81,7 @@ public class SwingClient extends JFrame {
         CalculationService calculationService = CalculationServicesFactory.createSimpleCalculationService();
 
         // get expression from text area
-        String expression = textArea.getText().replaceAll("\n", "").replaceAll(" ", "");
+        String expression = textArea.getText().replaceAll("\n", "");
 
         // try to calculate
         try {

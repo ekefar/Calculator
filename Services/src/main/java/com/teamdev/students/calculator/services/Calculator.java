@@ -18,7 +18,7 @@ public class Calculator {
 
     public Calculator(CalculationContext context) {
         this.context = context;
-        parser = new SimpleParser(context.getExpression());
+        parser = new SimpleParser(context.getObjectsProvider(), context.getExpression());
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.teamdev.students.calculator.model;
 
+import java.util.Set;
+
 /**
  * Represents factory for creating function objects.
  */
@@ -12,5 +14,12 @@ public interface FunctionFactory {
      * @return function object
      * @throws IllegalArgumentException if function was not found
      */
-    public Function getFunction(String functionRepresentation) throws IllegalArgumentException;
+    Function createFunction(String functionRepresentation) throws IllegalArgumentException;
+
+    /**
+     * Get set of functions representations.
+     *
+     * @return
+     */
+    Set<String> getFunctionsRepresentations();
 }

@@ -3,6 +3,9 @@ package com.teamdev.students.calculator.services.operations;
 import com.teamdev.students.calculator.model.Operation;
 import com.teamdev.students.calculator.model.OperationFactory;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Represent operation factory with base set of operations.
  */
@@ -10,40 +13,49 @@ public class BaseOperationFactory implements OperationFactory {
     /**
      * Represents different math operations, such as '+', '-', '*', etc.
      */
-    public enum Operations {
+    private enum Operations {
         PLUS("+"),
         MINUS("-"),
         MULTIPLICATION("*"),
         DIVISION("/"),
         POWER("^");
 
-        private String value;
+        public String value;
 
         Operations(String value) {
             this.value = value;
         }
 
-        public String getValue() {
-            return value;
-        }
-
     }
 
     @Override
-    public Operation getOperation(String operationRepresentation) throws IllegalArgumentException {
+    public Operation createOperation(String operationRepresentation) throws IllegalArgumentException {
 
-        if (operationRepresentation.equals(Operations.PLUS.getValue()))
+        if (Operations.PLUS.value.equals(operationRepresentation))
             return new PlusOperation();
-        else if (operationRepresentation.equals(Operations.MINUS.getValue()))
+        else if (Operations.MINUS.value.equals(operationRepresentation))
             return new MinusOperation();
-        else if (operationRepresentation.equals(Operations.DIVISION.getValue()))
+        else if (Operations.DIVISION.value.equals(operationRepresentation))
             return new DivisionOperation();
-        else if (operationRepresentation.equals(Operations.MULTIPLICATION.getValue()))
+        else if (Operations.MULTIPLICATION.value.equals(operationRepresentation))
             return new MultiplyOperation();
-        else if (operationRepresentation.equals(Operations.POWER.getValue()))
+        else if (Operations.POWER.value.equals(operationRepresentation))
             return new PowerOperation();
         else {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public Set<String> getOperationsRepresentations() {
+
+        Set<String> result = new HashSet<String>();
+
+        for (Operations f : Operations.values()) {
+            result.add(f.value);
+        }
+
+        return result;
+
     }
 }
