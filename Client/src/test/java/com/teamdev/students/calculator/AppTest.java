@@ -14,6 +14,7 @@ import junit.framework.TestSuite;
  */
 public class AppTest
         extends TestCase {
+
     /**
      * Create the test case
      *
@@ -28,13 +29,6 @@ public class AppTest
      */
     public static Test suite() {
         return new TestSuite(AppTest.class);
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp() {
-        assertTrue(true);
     }
 
     /**
@@ -313,7 +307,7 @@ public class AppTest
      */
     public void testMaxFunction() throws CalculationException {
         final double EXPECTED_RESULT = 25;
-        final String EXPRESSION = "max(25,5)";
+        final String EXPRESSION = "max(25,max(5))";
         double actualResult = calculateExpression(EXPRESSION);
 
         // assert equality of expected and actual results
@@ -412,7 +406,7 @@ public class AppTest
     }
 
     /**
-     * test case for checking sum function
+     * test case for checking various expression
      *
      * @throws com.teamdev.students.calculator.services.api.CalculationException
      *          if fail

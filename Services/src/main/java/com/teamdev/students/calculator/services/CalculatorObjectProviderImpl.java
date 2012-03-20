@@ -3,20 +3,20 @@ package com.teamdev.students.calculator.services;
 import com.teamdev.students.calculator.model.CalculatorObjectsProvider;
 import com.teamdev.students.calculator.model.FunctionFactory;
 import com.teamdev.students.calculator.model.OperationFactory;
-import com.teamdev.students.calculator.services.functions.BaseFunctionFactory;
-import com.teamdev.students.calculator.services.operations.BaseOperationFactory;
+import com.teamdev.students.calculator.services.functions.FunctionFactoryImpl;
+import com.teamdev.students.calculator.services.operations.OperationFactoryImpl;
 
 /**
  * Represents calculator object provider that contains base set of objects
  */
-public class BaseCalculatorObjectProvider implements CalculatorObjectsProvider {
+public class CalculatorObjectProviderImpl implements CalculatorObjectsProvider {
     @Override
     public FunctionFactory getFunctionFactory() {
-        return new BaseFunctionFactory();
+        return new FunctionFactoryImpl();
     }
 
     @Override
     public OperationFactory getOperationFactory() {
-        return new BaseOperationFactory();
+        return new OperationFactoryImpl();
     }
 }

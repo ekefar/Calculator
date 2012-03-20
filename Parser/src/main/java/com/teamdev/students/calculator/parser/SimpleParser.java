@@ -13,6 +13,9 @@ import java.util.Set;
  */
 public class SimpleParser implements Parser {
 
+    private final char OPENING_BRACKET = '(';
+    private final char ARGUMENTS_DELIMITER = ',';
+
     // currently parsing position
     private int parsingPosition;
 
@@ -63,6 +66,9 @@ public class SimpleParser implements Parser {
         return extractToken();
     }
 
+    /**
+     * Skip whitespaces
+     */
     private void skipWhitespaces() {
         while (expression.charAt(parsingPosition) == ' ')
             parsingPosition++;
@@ -76,24 +82,14 @@ public class SimpleParser implements Parser {
      */
     private String extractToken() {
         char currentChar = expression.charAt(parsingPosition);
-        String tokenValue;
-        // if character is digit, then try to extract whole number
-        if (Character.isDigit(currentChar)) {
-            return extractNumber();
-        } else if (currentChar == '-') {
-            tokenValue = extractNumber();
-            if (!tokenValue.equals("")) {
-                return tokenValue;
-            } else {
-                parsingPosition++;
-                return "-";
-            }
-        }
-        // if character is alphabetic then try to create function token
-        else {
+
+        // try to extract number
+        String tokenValue = extractNumber();
+        // if failed then try to extract defined calculation token
+        if (tokenValue.equals("")) {
             tokenValue = extractCalculationToken();
         }
-        // '-' character  - try to extract negative number
+        // if failed then return this character
         if (tokenValue.equals("")) {
             parsingPosition++;
             tokenValue = Character.toString(currentChar);
@@ -114,9 +110,10 @@ public class SimpleParser implements Parser {
 
         // try to extract negative number
         if (expression.charAt(parsingPosition) == '-')
-            if (parsingPosition == 0 ||
-                    (parsingPosition > 0 && (expression.charAt(parsingPosition - 1) == '(' ||
-                            expression.charAt(parsingPosition - 1) == ','))) {
+            if ((parsingPosition == 0 ||
+                    (parsingPosition > 0 && (expression.charAt(parsingPosition - 1) == OPENING_BRACKET ||
+                            expression.charAt(parsingPosition - 1) == ARGUMENTS_DELIMITER))) &&
+                    Character.isDigit(expression.charAt(parsingPosition + 1))) {
                 extractedNumber += "-";
                 parsingPosition++;
             }

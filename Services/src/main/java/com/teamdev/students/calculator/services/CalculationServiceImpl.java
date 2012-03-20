@@ -17,7 +17,7 @@ class CalculationServiceImpl implements CalculationService {
     }
 
     public CalculationServiceImpl() {
-        objectsProvider = new BaseCalculatorObjectProvider();
+        objectsProvider = new CalculatorObjectProviderImpl();
     }
 
     @Override

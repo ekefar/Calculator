@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Represents function factory with base set of functions
  */
-public class BaseFunctionFactory implements FunctionFactory {
+public class FunctionFactoryImpl implements FunctionFactory {
 
 
     /**

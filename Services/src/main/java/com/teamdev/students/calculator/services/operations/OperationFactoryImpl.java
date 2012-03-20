@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Represent operation factory with base set of operations.
  */
-public class BaseOperationFactory implements OperationFactory {
+public class OperationFactoryImpl implements OperationFactory {
     /**
      * Represents different math operations, such as '+', '-', '*', etc.
      */
